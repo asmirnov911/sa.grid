@@ -1,0 +1,28 @@
+{
+  "name": "sa.grid",
+  "version": "0.0.1",
+  "homepage": "https://github.com/asm911/sa.grid",
+  "authors": [
+    "asm911"
+  ],
+  "description": "SlickGrid directives for AngularJS",
+  "main": "sa.grid.js",
+  "keywords": [
+    "SlickGrid",
+    "slick.grid",
+    "angular",
+    "angularjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.3",
+    "underscore": "~1.7.0"
+  }
+}
