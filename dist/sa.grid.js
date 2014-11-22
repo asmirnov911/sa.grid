@@ -1,4 +1,4 @@
-angular.module('sa.directives', [])
+angular.module('sa.grid', [])
     .directive('saGrid', ['$log', '$window', function ($log, $window) {
 
         return {
