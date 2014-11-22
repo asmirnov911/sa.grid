@@ -26,7 +26,7 @@ require.config({
         'slickcore': {deps: ['jquery']},
         'slickgrid': {deps: ['slickcore', 'jquery.event.drag']},
         'slickdataview': {deps: ['slickgrid']},
-        'sa.grid': {deps: ['angular', 'jquery', 'slickcore', 'slickgrid', 'slickdataview']}
+        'sa.grid': {deps: ['angular', 'jquery', 'underscore', 'slickcore', 'slickgrid', 'slickdataview']}
     },
     priority: [
         'angular'
