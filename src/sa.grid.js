@@ -29,7 +29,7 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window',
                 });
 
                 $(element).replaceWith(function () {
-                    return $(element = $("<div/>", attrs).append($(this).contents()).addClass('grid')[0]);
+                    return $(element = $('<div/>', attrs).append($(this).contents()).addClass('grid')[0]);
                 });
 
                 var dataView = new Slick.Data.DataView();
