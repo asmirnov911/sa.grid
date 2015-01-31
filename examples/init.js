@@ -10,6 +10,7 @@ require.config({
         angular: '../bower_components/angular/angular',
         underscore: '../bower_components/underscore/underscore',
         'jquery.event.drag': '../bower_components/jquery.event.drag-drop/event.drag/jquery.event.drag',
+        'jquery.ui': '../bower_components/jquery-ui/jquery-ui',
         slickcore: '../bower_components/slickgrid/slick.core',
         slickgrid: '../bower_components/slickgrid/slick.grid',
         slickdataview: '../bower_components/slickgrid/slick.dataview',
@@ -19,8 +20,9 @@ require.config({
         'jquery': {exports: '$'},
         'angular': {exports: 'angular'},
         'jquery.event.drag': {deps: ['jquery']},
+        'jquery.ui': {deps: ['jquery']},
         'slickcore': {deps: ['jquery']},
-        'slickgrid': {deps: ['slickcore', 'jquery.event.drag']},
+        'slickgrid': {deps: ['slickcore', 'jquery.event.drag', 'jquery.ui']},
         'slickdataview': {deps: ['slickgrid']},
         'sa.grid': {deps: ['angular', 'jquery', 'underscore', 'slickcore', 'slickgrid', 'slickdataview']}
     },
