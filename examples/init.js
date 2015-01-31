@@ -6,7 +6,7 @@
 
 require.config({
     paths: {
-        jquery: '../bower_components/jquery/jquery',
+        jquery: '../bower_components/jquery/dist/jquery',
         angular: '../bower_components/angular/angular',
         underscore: '../bower_components/underscore/underscore',
         'jquery.event.drag': '../bower_components/jquery.event.drag-drop/event.drag/jquery.event.drag',
