@@ -26,7 +26,7 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window',
                 var attrs = {};
 
                 $.each($(element)[0].attributes, function (idx, attr) {
-                    attrs[attr.nodeName] = attr.nodeValue;
+                    attrs[attr.nodeName] = attr.value;
                 });
 
                 $(element).replaceWith(function () {
