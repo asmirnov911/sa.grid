@@ -91,8 +91,8 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window', 'saGridUtils',
             }
         };
     }]);
-angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$timeout', '$window',
-    function ($http, $q, $log, $timeout, $window) {
+angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$timeout', '$window', 'saGridUtils',
+    function ($http, $q, $log, $timeout, $window, gridUtils) {
 
         var debounceInt = 500,
             scrollingDelay = 100;
@@ -270,24 +270,15 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
             },
             link: function (scope, element) {
 
-                $(element).addClass('grid');
+                element = gridUtils.replaceElement(element);
 
                 var loader = new RemoteModel(scope.url, scope.convert);
 
                 var loadingIndicator = null;
 
-                //TODO watch for columns collection
-                //colomn id is needed for sorting
-                var columns = _.map(scope.columns, function (col) {
-                    if (!col.id) {
-                        col.id = col.field;
-                    }
-                    return col;
-                });
+                var grid = new Slick.Grid(element, loader.data, gridUtils.prepareColumns(columns), scope.options);
 
-                var grid = new Slick.Grid(element, loader.data, columns, scope.options);
-
-                grid.onViewportChanged.subscribe(function (e, args) {
+                grid.onViewportChanged.subscribe(function () {
                     var vp = grid.getViewport();
                     loader.ensureData(vp.top, vp.bottom);
                 });
@@ -321,6 +312,10 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
                     loadingIndicator.fadeOut();
                 });
 
+                scope.$watch('columns', function (value) {
+                    grid.setColumns(gridUtils.prepareColumns(value));
+                }, true);
+
                 var initializing = true;
 
                 scope.$watch('search', _.debounce(function (search) {
@@ -344,6 +339,7 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
                 };
 
                 $($window).resize('resize', onResize);
+
                 scope.$on('$destroy', function () {
                     $($window).off('resize', onResize);
                 });
