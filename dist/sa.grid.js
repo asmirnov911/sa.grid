@@ -1,6 +1,18 @@
 angular.module('sa.grid', []);
 angular.module('sa.grid').directive('saGrid', ['$log', '$window',
     function ($log, $window) {
+
+        var prepareColumns = function (columns) {
+            angular.forEach(columns, function (col) {
+                //column id is needed for sorting
+                if (!col.id) {
+                    col.id = col.field;
+                }
+                return col;
+            });
+            return columns;
+        };
+
         return {
             restrict: 'AE',
             scope: {
@@ -21,17 +33,8 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window',
                     return $(element = $("<div/>", attrs).append($(this).contents()).addClass('grid')[0]);
                 });
 
-                //TODO watch for columns collection
-                //colomn id is needed for sorting
-                var columns = _.map(scope.columns, function (col) {
-                    if (!col.id) {
-                        col.id = col.field;
-                    }
-                    return col;
-                });
-
                 var dataView = new Slick.Data.DataView();
-                var grid = new Slick.Grid(element, dataView, columns, scope.options);
+                var grid = new Slick.Grid(element, dataView, prepareColumns(scope.columns), scope.options);
 
                 grid.onSort.subscribe(function (e, args) {
 
@@ -53,7 +56,11 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window',
                     dataView.endUpdate();
                     grid.invalidate();
                     grid.render();
-                }
+                };
+
+                scope.$watch('columns', function (value) {
+                    grid.setColumns(prepareColumns(value));
+                }, true);
 
                 scope.$watch('idProperty', function () {
                     refresh();
@@ -68,6 +75,7 @@ angular.module('sa.grid').directive('saGrid', ['$log', '$window',
                 };
 
                 $($window).resize('resize', onResize);
+
                 scope.$on('$destroy', function () {
                     $($window).off('resize', onResize);
                 });

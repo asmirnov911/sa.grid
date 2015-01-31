@@ -37,5 +37,14 @@ define(['angular', 'sa.grid'],
                     }
 
                     $scope.rows = data;
+
+                    var lastCol = $scope.columns[1];
+                    $scope.showHideLastColumn = function () {
+                        if ($scope.columns.length > 1) {
+                            $scope.columns.splice(1, 1)
+                        } else {
+                            $scope.columns.push(lastCol);
+                        }
+                    };
                 }]);
     });
