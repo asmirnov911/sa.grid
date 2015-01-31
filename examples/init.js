@@ -1,8 +1,4 @@
 /**
- * Created by Alexander on 11/22/2014.
- */
-
-/**
  * Created by Alexander S. on 11/8/2014.
  */
 
