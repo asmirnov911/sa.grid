@@ -14,7 +14,12 @@ module.exports = function (grunt) {
     grunt.initConfig({
         concat: {
             dist: {
-                src: ['src/sa.grid.mdl.js', 'src/sa.grid.js', 'src/sa.ajax.grid.js'],
+                src: [
+                    'src/sa.grid.mdl.js',
+                    'src/sa.grid.utils.js',
+                    'src/sa.grid.js',
+                    'src/sa.ajax.grid.js'
+                ],
                 dest: 'dist/sa.grid.js'
             }
         },
