@@ -1,6 +1,6 @@
 {
   "name": "sa.grid",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/asm911/sa.grid",
   "authors": [
     "asm911"
@@ -22,14 +22,17 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.3",
+    "angular": "~1.3.11",
+    "jquery": "~2.1.3",
+    "jquery-ui": "~1.11.2",
     "underscore": "~1.7.0",
-    "jquery": "~2.1.1",
     "slickgrid": "~2.1.0",
-    "jquery.event.drag-drop": "~2.2.1",
-    "jquery-ui": "~1.11.2"
+    "jquery.event.drag-drop": "~2.2.1"
   },
   "devDependencies": {
     "requirejs": "~2.1.15"
+  },
+  "resolutions": {
+    "jquery": "~1.8.1"
   }
 }

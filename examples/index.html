@@ -16,14 +16,15 @@
 <a href="#" ng-click="view=2">Example 2</a>
 <br/>
 <br/>
+
 <div ng-init="view=1" ng-if="view==1">
     Example 1
-    <div sa-grid
-         sa-grid-columns="columns"
-         sa-id-property="idProperty"
-         sa-grid-options="options"
-         sa-data-source="rows"
-         style="border-style: solid; border-width: 1px; height: 300px"></div>
+    <a href="#" ng-click="showHideLastColumn()">Show/Hide last command</a>
+    <sa-grid style="border-style: solid; border-width: 1px; margin: 10px; height: 100px;"
+             sa-grid-columns="columns"
+             sa-id-property="idProperty"
+             sa-grid-options="options"
+             sa-data-source="rows"></sa-grid>
 </div>
 <div ng-if="view==2">
     Example 2
