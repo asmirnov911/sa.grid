@@ -27,8 +27,8 @@ angular.module('sa.grid').factory('saGridUtils',
             }
         };
     });
-angular.module('sa.grid').factory('saGridRemoteModel',
-    function () {
+angular.module('sa.grid').factory('saGridRemoteModel', ['$timeout', '$http', '$q',
+    function ($timeout, $http, $q) {
         var RemoteModel = function (url, convert) {
 
             // private
@@ -193,7 +193,7 @@ angular.module('sa.grid').factory('saGridRemoteModel',
         };
 
         return RemoteModel;
-    });
+    }]);
 angular.module('sa.grid').directive('saGrid', ['$log', '$window', 'saGridUtils',
     function ($log, $window, gridUtils) {
 
@@ -280,7 +280,7 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
 
                 var loadingIndicator = null;
 
-                var grid = new Slick.Grid(element, loader.data, gridUtils.prepareColumns(columns), scope.options);
+                var grid = new Slick.Grid(element, loader.data, gridUtils.prepareColumns(scope.columns), scope.options);
 
                 grid.onViewportChanged.subscribe(function () {
                     var vp = grid.getViewport();

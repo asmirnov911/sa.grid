@@ -20,7 +20,7 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
 
                 var loadingIndicator = null;
 
-                var grid = new Slick.Grid(element, loader.data, gridUtils.prepareColumns(columns), scope.options);
+                var grid = new Slick.Grid(element, loader.data, gridUtils.prepareColumns(scope.columns), scope.options);
 
                 grid.onViewportChanged.subscribe(function () {
                     var vp = grid.getViewport();

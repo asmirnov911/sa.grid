@@ -1,5 +1,5 @@
-angular.module('sa.grid').factory('saGridRemoteModel',
-    function () {
+angular.module('sa.grid').factory('saGridRemoteModel', ['$timeout', '$http', '$q',
+    function ($timeout, $http, $q) {
         var RemoteModel = function (url, convert) {
 
             // private
@@ -164,4 +164,4 @@ angular.module('sa.grid').factory('saGridRemoteModel',
         };
 
         return RemoteModel;
-    });
+    }]);
