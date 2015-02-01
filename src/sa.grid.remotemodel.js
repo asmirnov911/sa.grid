@@ -1,10 +1,10 @@
-angular.module('sa.grid').factory('saGridRemoteModel', ['$timeout', '$http', '$q',
-    function ($timeout, $http, $q) {
-        var RemoteModel = function (url, convert) {
+angular.module('sa.grid').factory('saGridRemoteModel', ['$log', '$timeout', '$http', '$q',
+    function ($log, $timeout, $http, $q) {
+        var RemoteModel = function (url, convert, pageSize, scrollingDelay) {
 
             // private
-            var PAGESIZE = 50,
-                scrollingDelay = 100;
+            var PAGESIZE = pageSize || 50,
+                SCROLLING_DELAY = scrollingDelay || 100;
 
             var data = {
                 length: 0,
@@ -122,7 +122,7 @@ angular.module('sa.grid').factory('saGridRemoteModel', ['$timeout', '$http', '$q
                     canceler.toPage = toPage;
 
                     h_request = null;
-                }, scrollingDelay);
+                }, SCROLLING_DELAY);
             }
 
             function reloadData(from, to) {
