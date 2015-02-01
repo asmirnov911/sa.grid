@@ -35,6 +35,6 @@ module.exports = function (grunt) {
         }
     });
     // register tasks
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['concat', 'watch']);
     grunt.registerTask('build', ['concat']);
 };
