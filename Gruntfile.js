@@ -17,6 +17,7 @@ module.exports = function (grunt) {
                 src: [
                     'src/sa.grid.mdl.js',
                     'src/sa.grid.utils.js',
+                    'src/sa.grid.remotemodel.js',
                     'src/sa.grid.js',
                     'src/sa.ajax.grid.js'
                 ],

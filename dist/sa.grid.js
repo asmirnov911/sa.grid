@@ -27,80 +27,13 @@ angular.module('sa.grid').factory('saGridUtils',
             }
         };
     });
-angular.module('sa.grid').directive('saGrid', ['$log', '$window', 'saGridUtils',
-    function ($log, $window, gridUtils) {
-
-        return {
-            restrict: 'AE',
-            scope: {
-                idProperty: '=saIdProperty',
-                dataSource: '=saDataSource',
-                columns: '=saGridColumns',
-                options: '=saGridOptions'
-            },
-            link: function (scope, element) {
-
-                element = gridUtils.replaceElement(element);
-
-                var dataView = new Slick.Data.DataView();
-                var grid = new Slick.Grid(element, dataView, gridUtils.prepareColumns(scope.columns), scope.options);
-
-                grid.onSort.subscribe(function (e, args) {
-
-                    var comparator = function (a, b) {
-                        return (a[args.sortCol.field] > b[args.sortCol.field]) ? 1 : -1;
-                    };
-
-                    dataView.sort(comparator, args.sortAsc);
-                });
-
-                dataView.onRowsChanged.subscribe(function (e, args) {
-                    grid.invalidateRows(args.rows);
-                    grid.render();
-                });
-
-                var refresh = function () {
-                    dataView.beginUpdate();
-                    dataView.setItems(scope.dataSource || [], scope.idProperty);
-                    dataView.endUpdate();
-                    grid.invalidate();
-                    grid.render();
-                };
-
-                scope.$watch('columns', function (value) {
-                    grid.setColumns(gridUtils.prepareColumns(value));
-                }, true);
-
-                scope.$watch('idProperty', function () {
-                    refresh();
-                });
-
-                scope.$watchCollection('dataSource', function () {
-                    refresh();
-                });
-
-                var onResize = function () {
-                    grid.resizeCanvas();
-                };
-
-                $($window).resize('resize', onResize);
-
-                scope.$on('$destroy', function () {
-                    $($window).off('resize', onResize);
-                });
-            }
-        };
-    }]);
-angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$timeout', '$window', 'saGridUtils',
-    function ($http, $q, $log, $timeout, $window, gridUtils) {
-
-        var debounceInt = 500,
-            scrollingDelay = 100;
-
-        function RemoteModel(url, convert) {
+angular.module('sa.grid').factory('saGridRemoteModel',
+    function () {
+        var RemoteModel = function (url, convert) {
 
             // private
-            var PAGESIZE = 50;
+            var PAGESIZE = 50,
+                scrollingDelay = 100;
 
             var data = {
                 length: 0,
@@ -257,7 +190,78 @@ angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$time
                 onDataLoading: onDataLoading,
                 onDataLoaded: onDataLoaded
             };
-        }
+        };
+
+        return RemoteModel;
+    });
+angular.module('sa.grid').directive('saGrid', ['$log', '$window', 'saGridUtils',
+    function ($log, $window, gridUtils) {
+
+        return {
+            restrict: 'AE',
+            scope: {
+                idProperty: '=saIdProperty',
+                dataSource: '=saDataSource',
+                columns: '=saGridColumns',
+                options: '=saGridOptions'
+            },
+            link: function (scope, element) {
+
+                element = gridUtils.replaceElement(element);
+
+                var dataView = new Slick.Data.DataView();
+                var grid = new Slick.Grid(element, dataView, gridUtils.prepareColumns(scope.columns), scope.options);
+
+                grid.onSort.subscribe(function (e, args) {
+
+                    var comparator = function (a, b) {
+                        return (a[args.sortCol.field] > b[args.sortCol.field]) ? 1 : -1;
+                    };
+
+                    dataView.sort(comparator, args.sortAsc);
+                });
+
+                dataView.onRowsChanged.subscribe(function (e, args) {
+                    grid.invalidateRows(args.rows);
+                    grid.render();
+                });
+
+                var refresh = function () {
+                    dataView.beginUpdate();
+                    dataView.setItems(scope.dataSource || [], scope.idProperty);
+                    dataView.endUpdate();
+                    grid.invalidate();
+                    grid.render();
+                };
+
+                scope.$watch('columns', function (value) {
+                    grid.setColumns(gridUtils.prepareColumns(value));
+                }, true);
+
+                scope.$watch('idProperty', function () {
+                    refresh();
+                });
+
+                scope.$watchCollection('dataSource', function () {
+                    refresh();
+                });
+
+                var onResize = function () {
+                    grid.resizeCanvas();
+                };
+
+                $($window).resize('resize', onResize);
+
+                scope.$on('$destroy', function () {
+                    $($window).off('resize', onResize);
+                });
+            }
+        };
+    }]);
+angular.module('sa.grid').directive('saAjaxGrid', ['$http', '$q', '$log', '$timeout', '$window', 'saGridUtils', 'saGridRemoteModel',
+    function ($http, $q, $log, $timeout, $window, gridUtils, RemoteModel) {
+
+        var debounceInt = 500;
 
         return {
             restrict: 'A',
